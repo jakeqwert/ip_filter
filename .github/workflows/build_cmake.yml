@@ -123,7 +123,7 @@ jobs:
       - name: Update profile
         run: |
            if ( "${{ runner.os }}" STREQUAL "Linux" )
-             execute_process( COMMAND "conan profile update settings.compiler.libcxx=libstdc++11 default" ) 
+             execute_process( COMMAND conan profile update settings.compiler.libcxx=libstdc++11 default ) 
            endif()
            execute_process( COMMAND echo "Update profile" )
 
