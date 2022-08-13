@@ -1,2 +1,4 @@
 cmake-build-debug
+cmake-build-win-debug
+cmake-build-win-release
 .idea
