@@ -123,7 +123,7 @@ jobs:
       - name: Update profile
         run: |
            if ( "${{ runner.os }}" STREQUAL "Linux" )
-             COMMAND conan profile update settings.compiler.libcxx=libstdc++11 default 
+             COMMAND "conan profile update settings.compiler.libcxx=libstdc++11 default" 
            endif()
 
       - name: Install dependencies
