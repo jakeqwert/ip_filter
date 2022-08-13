@@ -114,7 +114,8 @@ Win
 
 
 //ниже вывожу отладочные сообщения
-#define NDEBUG
+//#define NDEBUG  // github action была ошибка из-за этого так как там сборка релиз была
+
 //#define _DEBUG
 #define _ITERATOR_DEBUG_LEVEL 0 //для Win в режимt отладки и не использовать поддержку итератора отладки
 
