@@ -125,12 +125,9 @@ jobs:
            if ( "${{ runner.os }}" STREQUAL "Linux" )
              execute_process( COMMAND conan profile update settings.compiler.libcxx=libstdc++11 default ) 
            endif()
-           execute_process( COMMAND echo "Update profile" )
 
       - name: Install dependencies
         run: conan install . -s build_type=${{env.BUILD_TYPE}} --install-folder=${{github.workspace}}/build
-
-
 
       - name: Configure
         shell: cmake -P {0}
