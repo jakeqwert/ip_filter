@@ -1,4 +1,6 @@
-#include "ip_filter.h"
+#define _ITERATOR_DEBUG_LEVEL 0 //для Win в режимt отладки и не использовать поддержку итератора отладки
+
+#include "ip_filter.h"  //не обязательно
 
 const char* ip_parser_error::what() const noexcept
 {

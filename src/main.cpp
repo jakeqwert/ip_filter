@@ -1,12 +1,9 @@
-// cat ip_filter.tsv | ip_filter
 // Вывод совпадет с ip_filter.tst
-
-// cat ip_filter.tsv | cmake-build-debug/ip_filter
-// Вывод совпадет с ip_filter.tst
-
 //WIN
 // cat ip_filter.tsv | cmake-build-debug/filter.exe
+// cat ip_filter.tsv | cmake-build-win-release\bin\ip_filter.exe
 
+//Linux
 // $ ip_filter < ip_filter.tsv
 
 
@@ -33,27 +30,94 @@
 //cmake
 
 /*
+Linux
    $ source ~/PackageManagerCPP_conan/venv/bin/activate
-   $ conan install . --install-folder cmake-build-debug --build=missing      // cmake-build-release
+
+Win
+   cmd
+   D:\PackageManagerCPP\venv\Scripts\activate
+      или
+   D:\PackageManagerCPP\venv\Scripts\activate.bat              в cmd отображает (venv)           в Powershell не отображает, но можно запустить cmd
+   (venv) D:\PackageManagerCPP> pip install -U pip    --user   в Powershell(admin) работает
+
+
+Linux
+   $ conan install . --install-folder cmake-build-debug --build=missing      // cmake-build-release  папка
      //лучше, т.к. указывается папка для build (иначе для subdirectory будет внутри их build делать и тек. папке)
    $ cmake -G "Unix Makefiles" -S . -B ./cmake-build-debug -DCMAKE_BUILD_TYPE=debug
    $ cmake --build ./cmake-build-debug                        --config Release
+
+Win
+   $ conan install . --install-folder cmake-build-win-debug --build=missing          // cmake-build-release папка
+     //лучше, т.к. указывается папка для build (иначе для subdirectory будет внутри их build делать и тек. папке)
+   $ cmake --help
+
+   $ conan --help
+   $ conan config -h
+   $ conan config home    //Conan home directory
+
+   $ cat C:\Users\f0340623\.conan\profiles\default
+       [settings]
+       os=Windows
+       os_build=Windows
+       arch=x86_64
+       arch_build=x86_64
+       compiler=Visual Studio
+       compiler.version=19.29
+       build_type=Release
+       [options]
+       [build_requires]
+       [env]
+
+   $ conan profile show default  // профиль default
+
+   // Debug Win
+   $ cmake -G "Visual Studio 16 2019" -S . -B ./cmake-build-win-debug -DCMAKE_BUILD_TYPE=debug
+   $ cmake --build ./cmake-build-win-debug --config Debug                       --config Release
 
      target calculations
      target MyProject
      target tests
 
+
+   // Release Win
+   $ conan install . --install-folder cmake-build-win-release --build=missing
+   $ cmake -G "Visual Studio 16 2019" -S . -B ./cmake-build-win-release -DCMAKE_BUILD_TYPE=release
+   $ cmake --build ./cmake-build-win-release --config Release
+
+   // Release Linux
+   $ conan install . --install-folder cmake-build-release --build=missing
+   $ cmake -G "Visual Studio 16 2019" -S . -B ./cmake-build-release -DCMAKE_BUILD_TYPE=release
+   $ cmake --build ./cmake-build-release --config Release
+
+
+
 // запуск программы
    $ ./cmake-build-debug/bin/ip_filter
+   //WIN передаем параметры
+   cat data/ip_filter.tsv | cmake-build-debug/filter.exe                               debug
+   cat data\ip_filter.tsv | cmake-build-win-release\bin\ip_filter.exe                  release *
+
+   cat data/ip_filter.tsv | cmake-build-win-release\bin\ip_filter.exe                 разные слеши работают в WIN
+
+   //Linux
+   $ cmake-build-win-release\bin\ip_filter < data\ip_filter.tsv
+
 
 // запуск тестов
    $ ./cmake-build-debug/bin/ip_filter_tests
 
+   Win release
+   $ .\cmake-build-win-release\bin\ip_filter_tests.exe
+   $ .\cmake-build-win-release\bin\ip_filter_tests
 */
 
 
 //ниже вывожу отладочные сообщения
 #define NDEBUG
+//#define _DEBUG
+#define _ITERATOR_DEBUG_LEVEL 0 //для Win в режимt отладки и не использовать поддержку итератора отладки
+
 
 #include "ip_filter.h"
 

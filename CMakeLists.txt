@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 project(ip_filter CXX)
 
-
+if (MSVC)
+    set(CONAN_DISABLE_CHECK_COMPILER ON) # Disabled conan compiler checks
+endif()
 
 #+++googletest
 #add_definitions("-std=c++11")
@@ -26,12 +28,40 @@ target_link_libraries(${PROJECT_NAME}_tests ${CONAN_LIBS})
 
 
 
-
+## Работало хорошо в линуксе
 set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
-        COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;-Werror"
+#        COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;-Werror"   # Linux
+##        COMPILE_OPTIONS "-W4;"                 # Win
         )
+if (MSVC)
+    # @see https://github.com/google/googletest/blob/master/googletest/README.md
+    # Visual Studio Dynamic vs Static Runtimes
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+    target_compile_options(
+            ${PROJECT_NAME} PRIVATE
+            /W4
+    )     # /W4 уровень предупреждений
+#    target_compile_options(
+#            ${PROJECT_NAME}_tests PRIVATE
+#            /W4
+#    )
+else ()
+    target_compile_options(
+            ${PROJECT_NAME} PRIVATE
+            -Wall -Wextra -pedantic -Werror
+            #-Wall -Weffc++ -Wextra -Wsign-conversion
+    )
+#    target_compile_options(
+#            ${PROJECT_NAME}_tests PRIVATE
+#            -Wall -Wextra -pedantic -Werror
+#    )
+endif()
+
+
+
 
 #set_target_properties(filter_tests PROPERTIES
 #        CXX_STANDARD 17
