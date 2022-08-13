@@ -120,11 +120,11 @@ jobs:
       - name: Create default profile
         run: conan profile new default --detect
 
-      - name: Update profile
-        run: |
-           if ( "${{ runner.os }}" STREQUAL "Linux" )
-             execute_process( COMMAND conan profile update settings.compiler.libcxx=libstdc++11 default ) 
-           endif()
+#      - name: Update profile
+#        run: |
+#           if ( "${{ runner.os }}" STREQUAL "Linux" )
+#             execute_process( COMMAND conan profile update settings.compiler.libcxx=libstdc++11 default )
+#           endif()
 
       - name: Install dependencies
         run: conan install . -s build_type=${{env.BUILD_TYPE}} --install-folder=${{github.workspace}}/build
