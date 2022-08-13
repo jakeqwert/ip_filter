@@ -34,6 +34,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         CXX_STANDARD_REQUIRED ON
 #        COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;-Werror"   # Linux
 ##        COMPILE_OPTIONS "-W4;"                 # Win
+#        -Wc++11-extensions
         )
 if (MSVC)
     # @see https://github.com/google/googletest/blob/master/googletest/README.md
